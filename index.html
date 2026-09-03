@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>Mohamed Ezz — Software Engineer</title>
+  <meta name="description" content="Mohamed Ezz — Software Engineer specializing in .NET, Node.js, and scalable backend systems. Clean code, solid architecture, and production-ready software." />
+  <meta name="keywords"    content="Mohamed Ezz, Software Engineer, .NET, ASP.NET Core, Node.js, Express, Backend Developer, C++, Portfolio, ECPC" />
+  <meta name="author"      content="Mohamed Ezz" />
+  <meta name="robots"      content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="Mohamed Ezz — Software Engineer" />
+  <meta property="og:description" content="Software Engineer specializing in .NET, Node.js, and scalable backend systems." />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Google Fonts — JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== BACKGROUND ===================== -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="bg-atmosphere" aria-hidden="true"></div>
+  <div class="bg-blob bg-blob-1" aria-hidden="true"></div>
+  <div class="bg-blob bg-blob-2" aria-hidden="true"></div>
+  <div class="bg-blob bg-blob-3" aria-hidden="true"></div>
+  <div class="bg-noise"         aria-hidden="true"></div>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+
+      <div class="nav-logo" aria-label="Home">
+        <span class="nl-host">user@portfolio</span>:~$
+      </div>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#experience">experience</a></li>
+        <li><a href="#contact">contact</a></li>
+        <li>
+          <a href="resume.pdf" class="nav-resume" target="_blank" rel="noopener" aria-label="Download resume PDF">
+            ./resume.pdf&nbsp;&#8595;
+          </a>
+        </li>
+      </ul>
+
+      <!-- Light mode easter egg -->
+      <button class="lm-btn" id="lm-btn" aria-label="Toggle light mode" title="Toggle light mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="2"     x2="12" y2="5"/>
+          <line x1="12" y1="19"    x2="12" y2="22"/>
+          <line x1="2"  y1="12"    x2="5"  y2="12"/>
+          <line x1="19" y1="12"    x2="22" y2="12"/>
+          <line x1="4.93"  y1="4.93"  x2="7.05"  y2="7.05"/>
+          <line x1="16.95" y1="16.95" x2="19.07" y2="19.07"/>
+          <line x1="4.93"  y1="19.07" x2="7.05"  y2="16.95"/>
+          <line x1="16.95" y1="7.05"  x2="19.07" y2="4.93"/>
+        </svg>
+      </button>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero" aria-labelledby="hero-name">
+
+    <div class="hero-content">
+
+      <!-- Left — intro text -->
+      <div class="hero-left">
+
+        <p class="hero-tagline">Welcome to my portfolio_</p>
+
+        <div class="hero-name-block">
+          <p class="hero-greeting">
+            <span class="prompt-char">&gt;</span> Hi, I'm
+          </p>
+          <h1 class="hero-name" id="hero-name">
+            <span class="accent">Mohamed Ezz</span>
+          </h1>
+          <p class="hero-role">
+            Software Engineer<span class="cursor-block" aria-hidden="true"></span>
+          </p>
+        </div>
+
+        <p class="hero-desc">
+          I build scalable backend systems and solve complex problems.<br />
+          Specialized in .NET and Node.js with a focus on clean code,<br />
+          performance, and reliable software architecture.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#projects" class="btn-terminal" aria-label="View projects">
+            <span>$ cat projects.json</span>
+            <span class="btn-arrow" aria-hidden="true">&#8594;</span>
+          </a>
+        </div>
+
+      </div><!-- /.hero-left -->
+
+      <!-- Right — terminal window -->
+      <div class="hero-right" aria-hidden="true">
+        <div class="terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dots">
+              <span class="terminal-dot dot-red"></span>
+              <span class="terminal-dot dot-yellow"></span>
+              <span class="terminal-dot dot-green-d"></span>
+            </div>
+            <div class="terminal-title">bash &mdash; 80&times;24</div>
+          </div>
+          <div class="terminal-body" id="hero-terminal-body"></div>
+        </div>
+      </div><!-- /.hero-right -->
+
+    </div><!-- /.hero-content -->
+
+    <!-- Bottom bar -->
+    <div class="hero-bottom">
+
+      <div class="hero-social">
+        <div class="hero-social-label">~/connect</div>
+        <div class="hero-social-divider"></div>
+        <div class="hero-social-links">
+
+          <a href="https://github.com/7mohamedezz" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+            <!-- GitHub -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+            GitHub
+          </a>
+
+          <a href="https://linkedin.com/in/7mohamedezz" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+            <!-- LinkedIn -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+
+          <a href="mailto:7mohamedezz@gmail.com" class="social-link" aria-label="Send email">
+            <!-- Email -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            Email
+          </a>
+
+          <a href="https://wa.me/7mohamedezz" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <!-- WhatsApp -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+            WhatsApp
+          </a>
+
+        </div>
+      </div><!-- /.hero-social -->
+
+      <div class="hero-next" id="hero-next" role="button" tabindex="0" aria-label="Scroll to About section">
+        $ next --about <span class="arrow">&#8594;</span>
+      </div>
+
+    </div><!-- /.hero-bottom -->
+
+  </section><!-- /#hero -->
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container">
+
+      <div class="section-header reveal">
+        <div class="section-cmd">
+          <span class="s-prompt">$</span>
+          <span class="s-cmd">cat about.txt</span>
+        </div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="about-content">
+
+        <div class="about-text reveal reveal-d1">
+          <p>
+            Software Engineer focused on backend development, system design,
+            algorithms, and building reliable production-ready applications.
+          </p>
+          <p>
+            I approach every problem with a strong foundation in computer science
+            and competitive programming. My work spans from low-level algorithm
+            optimization in C++ to architecting robust REST APIs in .NET and Node.js.
+          </p>
+          <p>
+            I value clean, maintainable code, thorough testing, and software that
+            holds up under real-world conditions. Currently open to backend
+            engineering roles with teams who take their craft seriously.
+          </p>
+        </div>
+
+        <div class="about-stats reveal reveal-d2">
+          <div class="stat-item">
+            <div class="stat-number">3&times;</div>
+            <div class="stat-label">ECPC Finalist</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">Projects shipped</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Languages proficient</div>
+          </div>
+        </div>
+
+      </div><!-- /.about-content -->
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS ===================== -->
+  <section id="skills" aria-labelledby="skills-heading">
+    <div class="container">
+
+      <div class="section-header reveal">
+        <div class="section-cmd">
+          <span class="s-prompt">$</span>
+          <span class="s-cmd">ls ./skills</span>
+        </div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="skills-grid reveal reveal-d1" role="list" aria-label="Skill categories">
+
+        <div class="skill-category" role="listitem">
+          <div class="skill-cat-title">backend/</div>
+          <div class="skill-tree" role="list" aria-label="Backend skills">
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> .NET</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> ASP.NET Core</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> Node.js</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9492;&#9472;&#9472;</span> Express.js</div>
+          </div>
+        </div>
+
+        <div class="skill-category" role="listitem">
+          <div class="skill-cat-title">databases/</div>
+          <div class="skill-tree" role="list" aria-label="Database skills">
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> SQLite</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> MongoDB</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9492;&#9472;&#9472;</span> SQL</div>
+          </div>
+        </div>
+
+        <div class="skill-category" role="listitem">
+          <div class="skill-cat-title">languages/</div>
+          <div class="skill-tree" role="list" aria-label="Programming languages">
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> C++</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> C#</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> JavaScript</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9492;&#9472;&#9472;</span> Python</div>
+          </div>
+        </div>
+
+        <div class="skill-category" role="listitem">
+          <div class="skill-cat-title">tools/</div>
+          <div class="skill-tree" role="list" aria-label="Tools and platforms">
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> Git</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> Linux</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9500;&#9472;&#9472;</span> REST APIs</div>
+            <div class="skill-item" role="listitem"><span class="skill-branch">&#9492;&#9472;&#9472;</span> Cloudinary</div>
+          </div>
+        </div>
+
+      </div><!-- /.skills-grid -->
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects" aria-labelledby="projects-heading">
+    <div class="container">
+
+      <div class="section-header reveal">
+        <div class="section-cmd">
+          <span class="s-prompt">$</span>
+          <span class="s-cmd">ls ./projects</span>
+        </div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="projects-list reveal reveal-d1" role="list">
+
+        <!-- Project 01 -->
+        <article class="project-item" role="listitem">
+          <div class="proj-index">[01]</div>
+          <div class="proj-body">
+            <h3 class="proj-name">Invoice Management System</h3>
+            <p class="proj-desc">
+              Desktop application for managing invoices, clients, and financial records.
+              Features AI-powered data extraction, automated report generation, and a local
+              SQLite database with full CRUD operations. Designed for offline reliability
+              and a clean operator workflow.
+            </p>
+            <div class="proj-tags" aria-label="Technologies used">
+              <span class="proj-tag">.NET</span>
+              <span class="proj-tag">C#</span>
+              <span class="proj-tag">SQLite</span>
+              <span class="proj-tag">AI Integration</span>
+              <span class="proj-tag">Desktop</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/YOUR_GITHUB/invoice-management" class="proj-link" target="_blank" rel="noopener noreferrer">
+              [gh] github &rarr;
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 02 -->
+        <article class="project-item" role="listitem">
+          <div class="proj-index">[02]</div>
+          <div class="proj-body">
+            <h3 class="proj-name">Freelance Platform</h3>
+            <p class="proj-desc">
+              Full-stack freelance marketplace connecting clients with developers and designers.
+              Includes role-based authentication, real-time messaging, file uploads via Cloudinary,
+              and a RESTful API with MongoDB persistence. Built to handle concurrent users and
+              asynchronous job workflows.
+            </p>
+            <div class="proj-tags" aria-label="Technologies used">
+              <span class="proj-tag">Node.js</span>
+              <span class="proj-tag">Express</span>
+              <span class="proj-tag">MongoDB</span>
+              <span class="proj-tag">Cloudinary</span>
+              <span class="proj-tag">REST API</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/YOUR_GITHUB/freelance-platform" class="proj-link" target="_blank" rel="noopener noreferrer">
+              [gh] github &rarr;
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 03 -->
+        <article class="project-item" role="listitem">
+          <div class="proj-index">[03]</div>
+          <div class="proj-body">
+            <h3 class="proj-name">Competitive Programming Solutions</h3>
+            <p class="proj-desc">
+              Curated repository of competitive programming solutions spanning graph algorithms,
+              dynamic programming, data structures, and computational geometry. Each solution is
+              documented with problem context and time/space complexity analysis. Produced during
+              ECPC and ICPC-region preparation.
+            </p>
+            <div class="proj-tags" aria-label="Technologies used">
+              <span class="proj-tag">C++</span>
+              <span class="proj-tag">Algorithms</span>
+              <span class="proj-tag">Data Structures</span>
+              <span class="proj-tag">Graph Theory</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/YOUR_GITHUB/cp-solutions" class="proj-link" target="_blank" rel="noopener noreferrer">
+              [gh] github &rarr;
+            </a>
+          </div>
+        </article>
+
+      </div><!-- /.projects-list -->
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section id="experience" aria-labelledby="experience-heading">
+    <div class="container">
+
+      <div class="section-header reveal">
+        <div class="section-cmd">
+          <span class="s-prompt">$</span>
+          <span class="s-cmd">cat experience.log</span>
+        </div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="exp-log">
+
+        <div class="exp-entry reveal">
+          <div class="exp-meta">
+            <div class="exp-date">2024 &rarr; present</div>
+            <div class="exp-company">Freelance</div>
+          </div>
+          <div class="exp-body">
+            <div class="exp-role">Backend Software Engineer</div>
+            <ul class="exp-bullets">
+              <li>Designed and implemented REST APIs in .NET Core and Node.js for client projects across multiple domains</li>
+              <li>Built and optimized database schemas in SQLite and MongoDB for production data workloads</li>
+              <li>Delivered complete backend solutions including authentication systems, file handling pipelines, and business logic layers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-entry reveal reveal-d1">
+          <div class="exp-meta">
+            <div class="exp-date">2023 &rarr; 2024</div>
+            <div class="exp-company">ICPC Community</div>
+          </div>
+          <div class="exp-body">
+            <div class="exp-role">Competitive Programming Mentor</div>
+            <ul class="exp-bullets">
+              <li>Mentored junior participants in algorithms, data structures, and systematic problem-solving</li>
+              <li>Contributed to training sessions and problem-set reviews for ECPC preparation cycles</li>
+              <li>Represented the community as a 3x ECPC Finalist through consistent competitive performance</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /.exp-log -->
+    </div>
+  </section>
+
+  <!-- ===================== ACHIEVEMENTS ===================== -->
+  <section id="achievements" aria-labelledby="achievements-heading">
+    <div class="container">
+
+      <div class="section-header reveal">
+        <div class="section-cmd">
+          <span class="s-prompt">$</span>
+          <span class="s-cmd">./achievements --verbose</span>
+        </div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="achievements-out" role="list">
+
+        <div class="achv-line" role="listitem">
+          <span class="achv-check" aria-hidden="true">&#10003;</span>
+          <div class="achv-text">
+            <strong>3x ECPC Finalist</strong> &mdash; Egyptian Collegiate Programming Contest, qualified three consecutive years
+          </div>
+        </div>
+
+        <div class="achv-line" role="listitem">
+          <span class="achv-check" aria-hidden="true">&#10003;</span>
+          <div class="achv-text">
+            <strong>ICPC Community Mentor</strong> &mdash; Competitive programming training and guidance for regional participants
+          </div>
+        </div>
+
+        <div class="achv-line" role="listitem">
+          <span class="achv-check" aria-hidden="true">&#10003;</span>
+          <div class="achv-text">
+            <strong>Competitive Programming</strong> &mdash; Proficient in advanced algorithms, graph theory, DP, and data structures
+          </div>
+        </div>
+
+        <div class="achv-line" role="listitem">
+          <span class="achv-check" aria-hidden="true">&#10003;</span>
+          <div class="achv-text">
+            <strong>Backend Engineering Projects</strong> &mdash; Shipped production-ready .NET and Node.js systems for real clients
+          </div>
+        </div>
+
+        <div class="achv-line" role="listitem">
+          <span class="achv-check" aria-hidden="true">&#10003;</span>
+          <div class="achv-text">
+            <strong>Multi-language Proficiency</strong> &mdash; C++, C#, JavaScript, Python with hands-on project experience in each
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+
+      <div class="section-header reveal">
+        <div class="section-cmd">
+          <span class="s-prompt">$</span>
+          <span class="s-cmd">send-mail --to=me</span>
+        </div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="contact-layout">
+
+        <!-- Left: info -->
+        <div class="reveal reveal-d1">
+          <p class="contact-info-text">
+            Open to backend engineering roles, collaborative side projects,
+            and interesting technical conversations. Response time is under 24 hours.
+          </p>
+
+          <div class="contact-direct">
+            <div class="contact-row">
+            <span class="contact-lbl">email</span>
+            <a href="mailto:7mohamedezz@gmail.com">7mohamedezz@gmail.com</a>
+          </div>
+          <div class="contact-row">
+            <span class="contact-lbl">github</span>
+            <a href="https://github.com/7mohamedezz" target="_blank" rel="noopener noreferrer">
+              github.com/7mohamedezz
+            </a>
+          </div>
+          <div class="contact-row">
+            <span class="contact-lbl">linkedin</span>
+            <a href="https://linkedin.com/in/7mohamedezz" target="_blank" rel="noopener noreferrer">
+              linkedin.com/in/7mohamedezz
+            </a>
+          </div>
+          <div class="contact-row">
+            <span class="contact-lbl">whatsapp</span>
+            <a href="https://wa.me/7mohamedezz" target="_blank" rel="noopener noreferrer">
+              wa.me/7mohamedezz
+            </a>
+          </div>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <!--
+          TODO: Connect this form to a real endpoint before going live.
+          Options: Formspree (formspree.io), Netlify Forms, or a custom API route.
+          See the fetch() block in script.js for where to add it.
+        -->
+        <form class="contact-form reveal reveal-d2" id="contact-form" novalidate>
+
+          <div class="form-field">
+            <label class="form-label" for="form-name">
+              <span class="f-prompt">$</span> name
+            </label>
+            <input
+              type="text"
+              id="form-name"
+              name="name"
+              class="form-input"
+              placeholder="Your name"
+              required
+              autocomplete="name"
+            />
+            <span class="form-error" id="err-name" aria-live="polite"></span>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="form-email">
+              <span class="f-prompt">$</span> email
+            </label>
+            <input
+              type="email"
+              id="form-email"
+              name="email"
+              class="form-input"
+              placeholder="your@email.com"
+              required
+              autocomplete="email"
+            />
+            <span class="form-error" id="err-email" aria-live="polite"></span>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="form-message">
+              <span class="f-prompt">$</span> message
+            </label>
+            <textarea
+              id="form-message"
+              name="message"
+              class="form-textarea"
+              placeholder="What's on your mind?"
+              required
+            ></textarea>
+            <span class="form-error" id="err-message" aria-live="polite"></span>
+          </div>
+
+          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+
+          <div class="form-submit">
+            <button type="submit" class="btn-terminal" id="form-submit-btn">
+              <span>$ submit</span>
+              <span class="btn-arrow" aria-hidden="true">&#8594;</span>
+            </button>
+          </div>
+
+        </form>
+
+      </div><!-- /.contact-layout -->
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-copy">
+          &copy; <span id="footer-year"></span> Mohamed Ezz. All rights reserved.
+        </p>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="mailto:7mohamedezz@gmail.com">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Light mode error toast -->
+  <div id="lm-toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-cmd">
+      <span class="t-prompt">$</span> light-mode --enable
+    </div>
+    <div class="toast-body">
+      <span class="toast-err">error:</span><span class="toast-msg" id="lm-toast-msg"></span>
+    </div>
+    <button class="toast-close" id="lm-toast-close" aria-label="Dismiss">&#x2715;</button>
+  </div>
+
+  <script>
+    // Inject current year into footer
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+  <script src="script.js"></script>
+
+</body>
+</html>
