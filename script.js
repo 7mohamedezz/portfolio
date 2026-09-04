@@ -357,27 +357,20 @@
     btn.disabled  = true;
 
     try {
-      // ----------------------------------------------------------
-      // TODO: Replace with your actual form endpoint before going live.
-      // Fastest option: https://formspree.io (free tier)
-      //
-      // const res = await fetch('https://formspree.io/f/YOUR_ID', {
-      //   method: 'POST',
-      //   headers: { 'Accept': 'application/json' },
-      //   body: new FormData(form),
-      // });
-      // if (!res.ok) throw new Error('send failed');
-      // ----------------------------------------------------------
-
-      await new Promise(r => setTimeout(r, 1400)); // remove when endpoint is live
+      const res = await fetch('https://formspree.io/f/xdeodojd', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error('send failed');
 
       if (status) status.textContent = '✓ Message sent — I will respond shortly.';
       form.reset();
       Object.keys(fields).forEach(k => clearError(k));
-    } catch {
+    } catch(err) {
       if (status) {
         status.style.color = '#ff5f57';
-        status.textContent = 'error: send failed — email me directly at 7mohamedezz@gmail.com';
+        status.textContent = err.message || 'error: send failed — email me directly at 7mohamedezz@gmail.com';
       }
     } finally {
       btn.innerHTML = orig;
