@@ -870,16 +870,35 @@ section {
   font-size: 12px;
 }
 .contact-lbl {
-  color: var(--text-dim);
-  width: 66px;
+  color: var(--green-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  letter-spacing: 0.04em;
 }
+.contact-lbl svg { color: var(--green); }
 .contact-row a {
   color: var(--text-dim);
   transition: color var(--t-fast);
 }
 .contact-row a:hover { color: var(--green); }
+
+.contact-row.highlight {
+  color: var(--green);
+  padding: 6px 10px;
+  border-left: 2px solid var(--green);
+  background: var(--green-glow);
+  border-radius: 3px;
+  transition: transform var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), border-left-color var(--t-fast);
+}
+.contact-row.highlight .contact-lbl { color: var(--green-dim); }
+.contact-row.highlight a:hover { color: var(--green); }
+.contact-row.highlight:hover {
+  background: var(--green-glow-md);
+  border-left-color: var(--green);
+  box-shadow: 0 0 12px var(--green-glow);
+  transform: translateX(4px);
+}
 
 /* Form */
 .contact-form {
