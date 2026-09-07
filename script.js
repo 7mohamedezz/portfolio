@@ -115,38 +115,39 @@
 })();
 
 /* ============================================================
-   HERO TERMINAL TYPEWRITER
+   HERO TERMINAL — animated sequence + live interactive input
    ============================================================ */
 (function initHeroTerminal() {
   const body = document.getElementById('hero-terminal-body');
   if (!body) return;
 
-  // Delays (ms)
-  const CHAR_SPEED    = 52;   // typing speed per character
-  const CHAR_JITTER   = 22;   // random jitter added
-  const LINE_DELAY    = 55;   // delay between instant lines
-  const POST_CMD_WAIT = 280;  // pause after typing a command
-  const EXEC_WAIT     = 440;  // pause before showing script output
+  /* ---- timing ---- */
+  const CHAR_SPEED    = 48;
+  const CHAR_JITTER   = 18;
+  const LINE_DELAY    = 45;
+  const POST_CMD_WAIT = 260;
+  const EXEC_WAIT     = 380;
 
-  function wait(ms) {
-    return new Promise(r => setTimeout(r, ms));
-  }
+  const PROMPT_HTML =
+    `<span class="t-prompt">user@portfolio</span>` +
+    `<span class="t-dim">:~$</span>&nbsp;`;
 
-  // Append a line instantly with HTML content
-  function addLine(html) {
+  function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function addLine(html, cls = '') {
     const div = document.createElement('div');
-    div.className = 'terminal-line';
+    div.className = 'terminal-line' + (cls ? ' ' + cls : '');
     div.innerHTML = html;
     body.appendChild(div);
     body.scrollTop = body.scrollHeight;
+    return div;
   }
 
-  // Type a command character by character after the prompt HTML
-  function typeCmd(promptHtml, cmdText) {
+  function typeCmd(cmdText) {
     return new Promise(resolve => {
       const div = document.createElement('div');
       div.className = 'terminal-line';
-      div.innerHTML = promptHtml;
+      div.innerHTML = PROMPT_HTML;
       body.appendChild(div);
 
       const span = document.createElement('span');
@@ -164,71 +165,269 @@
     });
   }
 
-  const PROMPT_HTML =
-    `<span class="t-prompt">user@portfolio</span>` +
-    `<span class="t-dim">:</span>` +
-    `<span class="t-path">~/portfolio</span>` +
-    `<span class="t-dim">$</span>&nbsp;`;
+  /* ---- about card ---- */
+  const BOX_LINES = [
+    { html: `  <span class="t-green-b">Mohamed Ezz</span>`, cls: '' },
+    { html: `  <span class="t-dim">Software Engineer</span>`, cls: '' },
+    { html: ``, cls: '' },
+    { html: `  <span class="t-cyan">Backend · .NET · Node.js · C++</span>`, cls: '' },
+    { html: ``, cls: '' },
+    { html: `  <span class="t-amber">✦</span> 3× ECPC Finalist`, cls: '' },
+    { html: `  <span class="t-amber">✦</span> ICPC Mentor`, cls: '' },
+    { html: ``, cls: '' },
+    { html: `  <span class="t-dim">"I solve hard problems and turn them into</span>`, cls: '' },
+    { html: `   <span class="t-dim">simple, reliable systems."</span>`, cls: '' },
+  ];
 
-  async function run() {
-    await wait(550);
+  /* ---- ls output ---- */
+  const LS_LINES = [
+    `<span class="t-ls-dir">about/</span><span class="t-ls-dir">projects/</span><span class="t-ls-dir">experience/</span>`,
+    `<span class="t-ls-dir">skills/</span><span class="t-ls-dir">achievements/</span><span class="t-ls-dir">contact/</span>`,
+  ];
 
-    // > cat intro.sh
-    await typeCmd(PROMPT_HTML, 'cat intro.sh');
+  /* ---- animation sequence ---- */
+  async function animate() {
+    await wait(500);
+
+    /* whoami */
+    await typeCmd('whoami');
     await wait(POST_CMD_WAIT);
+    addLine(`<span class="t-output t-green-b">Mohamed Ezz</span>`);
+    addLine('');
 
-    // File contents appear line by line
-    const fileLines = [
-      `<span class="t-comment">#!/bin/bash</span>`,
-      `<span class="t-comment"># Portfolio — Mohamed Ezz</span>`,
-      ``,
-      `<span class="t-builtin">NAME</span><span class="t-dim">="</span><span class="t-string">Mohamed Ezz</span><span class="t-dim">"</span>`,
-      `<span class="t-builtin">ROLE</span><span class="t-dim">="</span><span class="t-string">Software Engineer</span><span class="t-dim">"</span>`,
-      `<span class="t-builtin">STACK</span><span class="t-dim">="</span><span class="t-string">.NET · Node.js · Backend</span><span class="t-dim">"</span>`,
-      ``,
-      `<span class="t-builtin">echo</span> <span class="t-dim">"</span><span class="t-string">Hi, I'm <span class="t-var">$NAME</span></span><span class="t-dim">"</span>`,
-      `<span class="t-builtin">echo</span> <span class="t-dim">"</span><span class="t-string"><span class="t-var">$ROLE</span> | <span class="t-var">$STACK</span></span><span class="t-dim">"</span>`,
-    ];
+    await wait(420);
 
-    for (const line of fileLines) {
-      addLine(line);
+    /* ./about */
+    await typeCmd('./about');
+    await wait(EXEC_WAIT);
+    addLine('');
+    for (const {html, cls} of BOX_LINES) {
+      addLine(html, cls);
       await wait(LINE_DELAY);
     }
-
-    await wait(320);
-
-    // > ./intro.sh
-    addLine('');
-    await typeCmd(PROMPT_HTML, './intro.sh');
-    await wait(EXEC_WAIT);
-
-    // Script output
-    addLine('');
-    addLine(
-      `<span class="t-output" style="color:var(--green);font-size:14px;letter-spacing:-0.01em">Hi, I'm Mohamed Ezz</span>`
-    );
-    await wait(80);
-    addLine(
-      `<span class="t-output" style="color:var(--text)">Software Engineer | .NET · Node.js · Backend</span>`
-    );
-    await wait(80);
     addLine('');
 
     await wait(480);
 
-    // Final prompt with blinking cursor
-    const finalLine = document.createElement('div');
-    finalLine.className = 'terminal-line';
-    finalLine.innerHTML = PROMPT_HTML;
-    const cur = document.createElement('span');
-    cur.className = 'cursor-block';
-    finalLine.appendChild(cur);
-    body.appendChild(finalLine);
+    /* ls */
+    await typeCmd('ls');
+    await wait(POST_CMD_WAIT);
+    addLine('');
+    for (const line of LS_LINES) {
+      addLine(line);
+      await wait(LINE_DELAY + 20);
+    }
+    addLine('');
+
+    await wait(340);
+
+    /* hand off to interactive shell */
+    startInteractive();
+  }
+
+  /* ---- interactive shell ---- */
+  function startInteractive() {
+    /* Disable on touch-primary devices */
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    const inputLine = document.createElement('div');
+    inputLine.className = 'terminal-line terminal-input-line';
+    inputLine.innerHTML = PROMPT_HTML;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'terminal-input';
+    input.setAttribute('aria-label', 'Terminal input');
+    input.setAttribute('autocomplete', 'off');
+    input.setAttribute('spellcheck', 'false');
+    input.setAttribute('autocorrect', 'off');
+
+    if (isTouch) {
+      /* read-only ghost cursor on mobile */
+      const cur = document.createElement('span');
+      cur.className = 'cursor-block';
+      inputLine.appendChild(cur);
+      body.appendChild(inputLine);
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
+
+    inputLine.appendChild(input);
+    body.appendChild(inputLine);
+    body.scrollTop = body.scrollHeight;
+
+    /* Click anywhere on terminal → focus input */
+    body.addEventListener('click', () => input.focus({ preventScroll: true }));
+    input.focus({ preventScroll: true });
+
+    const history = [];
+    let histIdx   = -1;
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (histIdx < history.length - 1) {
+          histIdx++;
+          input.value = history[history.length - 1 - histIdx] || '';
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (histIdx > 0) {
+          histIdx--;
+          input.value = history[history.length - 1 - histIdx] || '';
+        } else {
+          histIdx = -1;
+          input.value = '';
+        }
+      } else if (e.key === 'Enter') {
+        const cmd = input.value.trim();
+        input.value = '';
+        histIdx = -1;
+        if (!cmd) return;
+        history.push(cmd);
+        echoCmd(cmd);
+        runCmd(cmd);
+      }
+    });
+  }
+
+  function echoCmd(cmd) {
+    /* Print the typed command as a "submitted" line above the input */
+    const echoDiv = document.createElement('div');
+    echoDiv.className = 'terminal-line';
+    echoDiv.innerHTML = PROMPT_HTML + `<span class="t-cmd">${escHtml(cmd)}</span>`;
+    body.insertBefore(echoDiv, body.lastChild);
     body.scrollTop = body.scrollHeight;
   }
 
-  run();
+  function insertBeforeInput(html, cls) {
+    const div = document.createElement('div');
+    div.className = 'terminal-line' + (cls ? ' ' + cls : '');
+    div.innerHTML = html;
+    body.insertBefore(div, body.lastChild);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function navTo(id, label) {
+    insertBeforeInput(`<span class="t-dim">→ navigating to ${label}/</span>`);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+  }
+
+  function runCmd(cmd) {
+    const c = cmd.toLowerCase().trim();
+
+    /* support: cd <section> */
+    if (c.startsWith('cd ')) {
+      const target = c.slice(3).trim().replace(/\/$/, '');
+      const navMap = { about: 'about', projects: 'projects', skills: 'skills',
+        experience: 'experience', achievements: 'achievements', contact: 'contact' };
+      if (navMap[target]) {
+        insertBeforeInput('');
+        navTo(navMap[target], target);
+        insertBeforeInput('');
+      } else {
+        insertBeforeInput('');
+        insertBeforeInput(`<span style="color:#ff5f57">cd: ${escHtml(target)}: No such directory</span>`);
+        insertBeforeInput('');
+      }
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
+
+    if (c === 'clear') {
+      body.querySelectorAll('.terminal-line:not(.terminal-input-line)').forEach(el => el.remove());
+      return;
+    }
+
+    insertBeforeInput(''); /* blank line after echo */
+
+    switch (c) {
+      case 'help':
+        [
+          `<span class="t-amber">Available commands:</span>`,
+          ``,
+          `  <span class="t-green-b">about</span>        <span class="t-dim">→ Who I am</span>`,
+          `  <span class="t-green-b">whoami</span>       <span class="t-dim">→ Quick identity</span>`,
+          `  <span class="t-green-b">ls</span>           <span class="t-dim">→ List sections</span>`,
+          `  <span class="t-green-b">projects</span>     <span class="t-dim">→ Things I've built</span>`,
+          `  <span class="t-green-b">skills</span>       <span class="t-dim">→ Technologies I work with</span>`,
+          `  <span class="t-green-b">experience</span>   <span class="t-dim">→ My journey</span>`,
+          `  <span class="t-green-b">achievements</span> <span class="t-dim">→ Competitive programming & more</span>`,
+          `  <span class="t-green-b">contact</span>      <span class="t-dim">→ Get in touch</span>`,
+          `  <span class="t-green-b">resume</span>       <span class="t-dim">→ Open resume.pdf</span>`,
+          `  <span class="t-green-b">clear</span>        <span class="t-dim">→ Clear terminal</span>`,
+          ``,
+        ].forEach(l => insertBeforeInput(l));
+        break;
+
+      case 'whoami':
+        insertBeforeInput(`<span class="t-green-b">Mohamed Ezz</span> <span class="t-dim">— Software Engineer</span>`);
+        insertBeforeInput(`<span class="t-dim">3× ECPC Finalist · ICPC Mentor · Backend Developer</span>`);
+        insertBeforeInput('');
+        break;
+
+      case 'about':
+        BOX_LINES.forEach(({html, cls}) => insertBeforeInput(html, cls));
+        insertBeforeInput('');
+        break;
+
+      case 'ls':
+        LS_LINES.forEach(l => insertBeforeInput(l));
+        insertBeforeInput('');
+        break;
+
+      case 'projects':
+        navTo('projects', 'projects');
+        insertBeforeInput('');
+        break;
+
+      case 'skills':
+        navTo('skills', 'skills');
+        insertBeforeInput('');
+        break;
+
+      case 'experience':
+        navTo('experience', 'experience');
+        insertBeforeInput('');
+        break;
+
+      case 'achievements':
+        navTo('achievements', 'achievements');
+        insertBeforeInput('');
+        break;
+
+      case 'contact':
+        navTo('contact', 'contact');
+        insertBeforeInput('');
+        break;
+
+      case 'resume':
+        insertBeforeInput(`<span class="t-dim">→ opening resume.pdf</span>`);
+        insertBeforeInput('');
+        setTimeout(() => window.open('resume.pdf', '_blank'), 400);
+        break;
+
+      default:
+        insertBeforeInput(
+          `<span style="color:#ff5f57">command not found:</span> <span class="t-dim">${escHtml(c)}</span>` +
+          `  <span class="t-dim">— type</span> <span class="t-green-b">help</span> <span class="t-dim">for available commands</span>`
+        );
+        insertBeforeInput('');
+    }
+
+    body.scrollTop = body.scrollHeight;
+  }
+
+  animate();
 })();
+
 
 /* ============================================================
    INTERSECTION OBSERVER — section / element reveals
