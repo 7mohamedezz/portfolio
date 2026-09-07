@@ -1330,6 +1330,59 @@ section {
 }
 
 /* ============================================================
+   STATUS BAR
+   ============================================================ */
+.status-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+  padding: 10px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.status-bar-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 36px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green-dim);
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@media (max-width: 600px) {
+  .status-bar-inner {
+    justify-content: center;
+    gap: 6px 20px;
+  }
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 footer {
