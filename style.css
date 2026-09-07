@@ -1624,11 +1624,24 @@ footer {
 
   .hero-content {
     grid-template-columns: 1fr;
-    gap: 0;
+    gap: 40px;
   }
 
   .hero-right {
-    display: none;
+    opacity: 1;
+    animation: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .terminal-window {
+    width: 100%;
+    max-width: 472px;
+    height: 400px;
+  }
+
+  .terminal-body {
+    height: calc(400px - 38px);
   }
 
   #about .about-content {
