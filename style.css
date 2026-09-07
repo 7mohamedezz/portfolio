@@ -123,6 +123,28 @@ img {
   pointer-events: none;
 }
 
+/* Floating code fragments canvas */
+#code-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Terminal grid */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(92, 255, 114, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(92, 255, 114, 0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 100%);
+}
+
 .bg-atmosphere {
   position: fixed;
   inset: 0;
@@ -179,6 +201,21 @@ img {
   opacity: 0.022;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
+}
+
+/* Scanline overlay */
+.bg-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.028) 3px,
+    rgba(0, 0, 0, 0.028) 4px
+  );
 }
 
 /* ============================================================
@@ -1749,4 +1786,46 @@ footer {
   .ascii-name {
     font-size: 6.5px;
   }
+}
+
+/* ============================================================
+   ASCII NAME — green radial glow
+   ============================================================ */
+.ascii-name-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 64px;
+  overflow: visible;
+}
+.ascii-name-wrap::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(800px, 100%);
+  height: 180px;
+  background: radial-gradient(ellipse, rgba(92, 255, 114, 0.09) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(18px);
+}
+
+/* ============================================================
+   FOOTER SEPARATOR
+   ============================================================ */
+.footer-separator {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(92, 255, 114, 0.35) 30%,
+    rgba(92, 255, 114, 0.55) 50%,
+    rgba(92, 255, 114, 0.35) 70%,
+    transparent 100%
+  );
+  margin: 0;
+  position: relative;
+  z-index: 2;
 }

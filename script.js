@@ -660,3 +660,71 @@ if (heroNext) {
   if (closeBtn) closeBtn.addEventListener('click', hide);
 })();
 
+/* ============================================================
+   FLOATING CODE FRAGMENTS
+   ============================================================ */
+(function initCodeCanvas() {
+  const canvas = document.getElementById('code-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const FRAGS = [
+    '0','1','01','10','00','11','0x1f',
+    '$_','./','>>','#!','{}','[]','()',
+    'git','npm','fn()','null','true',
+    'EOF','sudo','grep','curl','ssh',
+    'const','async','await','return',
+  ];
+
+  let W, H, particles, raf;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function makeParticles(n = 55) {
+    particles = Array.from({ length: n }, () => ({
+      x:    Math.random() * W,
+      y:    Math.random() * H,
+      text: FRAGS[Math.floor(Math.random() * FRAGS.length)],
+      vy:   -(Math.random() * 0.22 + 0.06),
+      a:    Math.random() * 0.08 + 0.06,        // visible: 0.06–0.14
+      aDir: (Math.random() > 0.5 ? 1 : -1) * 0.0004,
+      size: Math.random() > 0.6 ? 13 : 10,
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#5cff72';
+
+    for (const p of particles) {
+      ctx.globalAlpha = Math.max(0, Math.min(0.18, p.a));
+      ctx.font = `${p.size}px 'JetBrains Mono', Consolas, monospace`;
+      ctx.fillText(p.text, p.x, p.y);
+
+      p.y  += p.vy;
+      p.a  += p.aDir;
+      if (p.a > 0.16 || p.a < 0.04) p.aDir *= -1;
+
+      if (p.y < -16) {
+        p.y    = H + 10;
+        p.x    = Math.random() * W;
+        p.text = FRAGS[Math.floor(Math.random() * FRAGS.length)];
+      }
+    }
+
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(draw);
+  }
+
+  resize();
+  makeParticles();
+  draw();
+
+  window.addEventListener('resize', () => {
+    resize();
+    makeParticles();
+  }, { passive: true });
+})();
