@@ -40,7 +40,7 @@
   /* Layout */
   --nav-h: 62px;
   --container-max: 1080px;
-  --section-pad: 140px;
+  --section-pad: 76px;
 
   /* Transitions */
   --t-fast: 0.14s ease;
@@ -593,6 +593,7 @@ section {
   display: flex;
   flex-direction: column;
   padding-top: var(--nav-h);
+  padding-bottom: 32px;
   position: relative;
   z-index: 2;
 }
@@ -756,7 +757,7 @@ section {
   max-width: var(--container-max);
   margin: 0 auto;
   width: 100%;
-  padding: 0 36px 40px;
+  padding: 0 36px 0;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -1619,7 +1620,7 @@ footer {
    ============================================================ */
 @media (max-width: 1024px) {
   :root {
-    --section-pad: 100px;
+    --section-pad: 64px;
   }
 
   .hero-content {
@@ -1666,7 +1667,7 @@ footer {
 
 @media (max-width: 768px) {
   :root {
-    --section-pad: 80px;
+    --section-pad: 48px;
     --nav-h: 56px;
   }
 
@@ -1765,7 +1766,7 @@ footer {
 
 @media (max-width: 480px) {
   :root {
-    --section-pad: 64px;
+    --section-pad: 38px;
   }
 
   .terminal-body {
