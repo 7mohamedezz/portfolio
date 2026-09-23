@@ -26,6 +26,7 @@
   --syn-muted-purple: #b8a4d8;
 
   /* Text */
+  --text-strong: #e9edf1;
   --text: #d4d4d0;
   --text-dim: #9ea8b3;
   --text-muted: #5e6b78;
@@ -36,6 +37,15 @@
 
   /* Typography */
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+
+  /* Type scale — display > h2 (section) > h3 (entry) > body > ui > micro */
+  --fs-display: clamp(32px, 4.6vw, 58px);
+  --fs-lead: 15px;
+  --fs-h2: 16px;
+  --fs-h3: 18px;
+  --fs-body: 13.5px;
+  --fs-ui: 13px;
+  --fs-micro: 11px;
 
   /* Layout */
   --nav-h: 62px;
@@ -359,15 +369,17 @@ section {
    SECTION HEADER — terminal command style
    ============================================================ */
 .section-header {
-  margin-bottom: 52px;
+  margin-bottom: 48px;
 }
 
 .section-cmd {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  margin-bottom: 10px;
+  gap: 9px;
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
 }
 
 .section-cmd .s-prompt {
@@ -375,7 +387,7 @@ section {
 }
 
 .section-cmd .s-cmd {
-  color: var(--text);
+  color: var(--text-strong);
 }
 
 .section-divider {
@@ -393,7 +405,7 @@ section {
   overflow: hidden;
   position: relative;
   width: 472px;
-  height: 646.1px;
+  height: 580px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.5),
     0 28px 88px rgba(0, 0, 0, 0.55),
@@ -461,7 +473,7 @@ section {
   padding: 22px 26px 26px;
   font-size: 12.5px;
   line-height: 1.85;
-  height: calc(646.1px - 38px);
+  height: calc(580px - 38px);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -604,7 +616,7 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 64px;
   align-items: center;
-  padding: 72px 0 52px;
+  padding: 56px 0 44px;
   max-width: var(--container-max);
   margin: 0 auto;
   width: 100%;
@@ -644,9 +656,10 @@ section {
 }
 
 .hero-name {
-  font-size: clamp(26px, 3.8vw, 46px);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   color: var(--text);
 }
 
@@ -655,7 +668,7 @@ section {
 }
 
 .hero-role {
-  font-size: clamp(14px, 2vw, 18px);
+  font-size: clamp(15px, 2vw, 20px);
   color: var(--text-dim);
   margin-top: 4px;
   display: flex;
@@ -671,10 +684,10 @@ section {
 }
 
 .hero-desc {
-  font-size: 13px;
-  color: #a8b4be;
-  line-height: 2;
-  max-width: 460px;
+  font-size: 14px;
+  color: #b3bfca;
+  line-height: 1.95;
+  max-width: 470px;
   opacity: 0;
   animation: fade-up 0.7s 0.8s forwards;
 }
@@ -865,10 +878,17 @@ section {
 }
 
 .about-text p {
-  font-size: 13px;
+  font-size: var(--fs-body);
   color: var(--text-dim);
-  line-height: 2.05;
+  line-height: 1.95;
   margin-bottom: 18px;
+}
+
+.about-text p:first-child {
+  font-size: var(--fs-lead);
+  color: var(--text);
+  line-height: 1.85;
+  margin-bottom: 22px;
 }
 
 .about-text p:last-child {
@@ -895,9 +915,10 @@ section {
 }
 
 .stat-number {
-  font-size: 30px;
+  font-size: 38px;
+  font-weight: 500;
   color: var(--green);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
@@ -932,7 +953,8 @@ section {
 }
 
 .skill-cat-title {
-  font-size: 12px;
+  font-size: var(--fs-ui);
+  font-weight: 500;
   color: var(--green);
   margin-bottom: 18px;
   letter-spacing: 0.03em;
@@ -948,9 +970,9 @@ section {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 12px;
+  font-size: var(--fs-ui);
   color: var(--text-dim);
-  line-height: 1.9;
+  line-height: 1.95;
   transition: color var(--t-fast);
   cursor: default;
 }
@@ -997,14 +1019,15 @@ section {
 }
 
 .proj-index {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   padding-top: 3px;
   letter-spacing: 0.04em;
 }
 
 .proj-name {
-  font-size: 15px;
+  font-size: var(--fs-h3);
+  font-weight: 500;
   color: var(--text);
   margin-bottom: 10px;
   letter-spacing: -0.01em;
@@ -1016,11 +1039,11 @@ section {
 }
 
 .proj-desc {
-  font-size: 12px;
+  font-size: var(--fs-body);
   color: var(--text-dim);
-  line-height: 1.95;
+  line-height: 1.9;
   margin-bottom: 18px;
-  max-width: 540px;
+  max-width: 560px;
 }
 
 .proj-tags {
@@ -1030,8 +1053,8 @@ section {
 }
 
 .proj-tag {
-  font-size: 11px;
-  color: var(--text-muted);
+  font-size: var(--fs-micro);
+  color: var(--text-dim);
   border: 1px solid var(--border);
   padding: 2px 9px;
   border-radius: 2px;
@@ -1054,8 +1077,8 @@ section {
 }
 
 .proj-link {
-  font-size: 11px;
-  color: var(--text-muted);
+  font-size: 12px;
+  color: var(--text-dim);
   border: 1px solid transparent;
   padding: 4px 10px;
   border-radius: 2px;
@@ -1091,19 +1114,20 @@ section {
 }
 
 .exp-date {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--green-dim);
   letter-spacing: 0.04em;
   margin-bottom: 4px;
 }
 
 .exp-company {
-  font-size: 12px;
+  font-size: var(--fs-ui);
   color: var(--text-muted);
 }
 
 .exp-role {
-  font-size: 14px;
+  font-size: 17px;
+  font-weight: 500;
   color: var(--text);
   margin-bottom: 14px;
   letter-spacing: -0.01em;
@@ -1117,9 +1141,9 @@ section {
 }
 
 .exp-bullets li {
-  font-size: 12px;
+  font-size: var(--fs-body);
   color: var(--text-dim);
-  line-height: 1.85;
+  line-height: 1.9;
   padding-left: 18px;
   position: relative;
 }
@@ -1145,7 +1169,7 @@ section {
   gap: 14px;
   padding: 16px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
+  font-size: 14px;
   opacity: 0;
   transform: translateX(-12px);
   transition: opacity 0.38s ease, transform 0.38s ease, color var(--t-fast);
@@ -1189,10 +1213,10 @@ section {
 }
 
 .contact-info-text {
-  font-size: 13px;
+  font-size: var(--fs-lead);
   color: var(--text-dim);
-  line-height: 2.05;
-  margin-bottom: 36px;
+  line-height: 1.9;
+  margin-bottom: 32px;
 }
 
 .contact-direct {
@@ -1205,7 +1229,7 @@ section {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 12px;
+  font-size: var(--fs-ui);
 }
 
 .contact-lbl {
@@ -1257,7 +1281,7 @@ section {
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
 }
 
 .form-field {
@@ -1278,15 +1302,15 @@ section {
 
 .form-input,
 .form-textarea {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--border);
-  padding: 10px 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 11px 13px;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text);
   outline: none;
-  transition: border-color var(--t-fast);
+  transition: border-color var(--t-fast), background var(--t-fast);
   resize: none;
   width: 100%;
 }
@@ -1298,18 +1322,24 @@ section {
 
 .form-input:focus,
 .form-textarea:focus {
-  border-bottom-color: var(--green);
+  border-color: var(--green-border);
+  background: var(--bg-elevated);
 }
 
 .form-textarea {
-  height: 110px;
+  height: 130px;
   line-height: 1.85;
 }
 
 /* Validation error states */
 .form-input.error,
 .form-textarea.error {
-  border-bottom-color: #ff5f57;
+  border-color: #ff5f57;
+}
+
+.form-error:empty,
+.form-status:empty {
+  min-height: 0;
 }
 
 .form-error {
@@ -1327,7 +1357,7 @@ section {
 }
 
 .form-submit {
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 /* ============================================================
@@ -1775,32 +1805,28 @@ footer {
   }
 
   .hero-name {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .hero-role {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .hero-desc {
-    font-size: 12.5px;
+    font-size: 13.5px;
   }
 }
 
 /* ============================================================
    ASCII NAME BANNER — contact section
    ============================================================ */
-.ascii-name-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 64px;
-  overflow: hidden;
-}
-
 .ascii-name {
   font-family: var(--font-mono);
-  font-size: clamp(7px, 1.05vw, 13px);
-  line-height: 1.25;
+  /* 5-row figlet art, 64 monospace columns wide (0.6em advance): size it to the
+     container so it reads as a banner. Rows must land on near-integer pixels —
+     a fractional line-height smears them into each other and looks like a bug. */
+  font-size: clamp(8px, calc((100vw - 72px) / 38.4), 26px);
+  line-height: 1.05;
   color: var(--green);
   text-shadow:
     0 0 8px rgba(92, 255, 114, 0.55),
@@ -1812,7 +1838,7 @@ footer {
   background: transparent;
   border: none;
   padding: 0;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   animation: ascii-flicker 6s ease-in-out infinite;
   user-select: none;
 }
@@ -1849,12 +1875,6 @@ footer {
   }
 }
 
-@media (max-width: 600px) {
-  .ascii-name {
-    font-size: 6.5px;
-  }
-}
-
 /* ============================================================
    ASCII NAME — green radial glow
    ============================================================ */
@@ -1862,7 +1882,7 @@ footer {
   position: relative;
   display: flex;
   justify-content: center;
-  margin-top: 64px;
+  margin-top: 56px;
   overflow: visible;
 }
 .ascii-name-wrap::before {
