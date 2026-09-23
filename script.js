@@ -728,3 +728,106 @@ if (heroNext) {
     makeParticles();
   }, { passive: true });
 })();
+
+
+/* ============================================================
+   ASCII NAME — brute-force "crack" reveal
+   Characters churn as random glyphs in a left-to-right sweep and
+   lock onto the real art one column at a time, like a movie
+   password scene. The authored art in the HTML stays the source
+   of truth: no JS (or reduced motion) simply means a static name.
+   ============================================================ */
+(function initAsciiCrack() {
+  const pre = document.querySelector('.ascii-name');
+  if (!pre) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const source = pre.textContent.replace(/^\n+|\n+$/g, '');
+  const rows   = source.split('\n');
+  const cols   = rows.reduce((n, line) => Math.max(n, line.length), 0);
+
+  const GLYPHS    = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*+=<>/\\_|~^?!';
+  const COL_DELAY = 18;    /* ms between consecutive columns in the sweep */
+  const SWAP      = 55;    /* ms between glyph swaps inside a churning cell */
+  const LOCK_MIN  = 130;   /* minimum churn time before a cell settles */
+  const LOCK_SPAN = 300;
+  const NBSP      = '\u00a0';
+
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  /* One span per character. Every cell always holds exactly one glyph — a blank
+     cell keeps the monospace grid so the name can't reflow mid-reveal. */
+  const cells = [];
+  pre.textContent = '';
+  rows.forEach(line => {
+    const row = document.createElement('div');
+    row.className = 'ascii-row';
+    for (let c = 0; c < cols; c++) {
+      const real = line[c] || ' ';
+      const el = document.createElement('span');
+      el.className = 'ascii-cell';
+      el.textContent = NBSP;
+      row.appendChild(el);
+      cells.push({
+        el,
+        col: c,
+        real:   real === ' ' ? NBSP : real,
+        state:  0,                    /* 0 waiting · 1 churning · 2 locked */
+        start:  c * COL_DELAY + Math.random() * 90,
+        lockAt: 0,
+        next:   0,
+      });
+    }
+    pre.appendChild(row);
+  });
+
+  cells.forEach(cell => { cell.lockAt = cell.start + rand(LOCK_MIN, LOCK_MIN + LOCK_SPAN); });
+
+  function crack() {
+    const t0 = performance.now();
+    let done = false;
+
+    (function frame(now) {
+      const t = now - t0;
+      let busy = false;
+
+      for (const cell of cells) {
+        if (cell.state === 2) continue;
+
+        if (t >= cell.lockAt) {                       /* settle on the real glyph */
+          cell.el.textContent = cell.real;
+          cell.el.classList.remove('churning');
+          if (cell.real !== NBSP) cell.el.classList.add('locked');
+          cell.state = 2;
+          busy = true;
+          continue;
+        }
+
+        if (t >= cell.start) {
+          if (cell.state === 0) { cell.state = 1; cell.el.classList.add('churning'); }
+          if (t >= cell.next) {
+            cell.el.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            cell.next = t + SWAP;
+          }
+        }
+        busy = true;
+      }
+
+      if (busy) return requestAnimationFrame(frame);
+      if (!done) {                                    /* hand the DOM back as authored */
+        done = true;
+        setTimeout(() => { pre.textContent = source; }, 600);
+      }
+    })(t0);
+  }
+
+  const target = pre.closest('.ascii-name-wrap') || pre;
+  if (!('IntersectionObserver' in window)) return void setTimeout(crack, 400);
+
+  const obs = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    obs.disconnect();
+    setTimeout(crack, 160);
+  }, { threshold: 0.35 });
+  obs.observe(target);
+})();

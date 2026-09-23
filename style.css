@@ -1847,6 +1847,37 @@ footer {
   display: none;
 }
 
+/* Per-character cells for the crack reveal (script.js) */
+.ascii-row {
+  display: block;
+}
+
+.ascii-cell.churning {
+  color: var(--green-dim);
+}
+
+.ascii-cell.locked {
+  animation: ascii-lock 0.45s ease-out;
+}
+
+@keyframes ascii-lock {
+  0% {
+    color: #f2fff0;
+    text-shadow: 0 0 14px rgba(92, 255, 114, 0.95), 0 0 36px rgba(92, 255, 114, 0.55);
+  }
+
+  100% {
+    color: var(--green);
+    text-shadow: 0 0 8px rgba(92, 255, 114, 0.55), 0 0 20px rgba(92, 255, 114, 0.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ascii-cell.locked {
+    animation: none;
+  }
+}
+
 @keyframes ascii-flicker {
 
   0%,
